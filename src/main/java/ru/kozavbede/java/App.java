@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ru.kozavbede.java.classfile.ClassFile;
-import ru.kozavbede.java.classfile.ClassFileBuilder;
 import ru.kozavbede.java.classfile.ClassFileReader;
 import ru.kozavbede.java.constpool.IInfo;
 import ru.kozavbede.java.constpool.impl.ClassInfo;
@@ -18,7 +17,7 @@ public class App {
 
 	public static void main(String[] args) throws IOException {
 		try (InputStream is = new FileInputStream("C:\\java\\Bl.class")) {
-			ClassFileReader classFileReader = new ClassFileReader(is, new ClassFileBuilder());
+			ClassFileReader classFileReader = new ClassFileReader(is);
 			ClassFile classFile = classFileReader.read();
 
 			printConstantPool(classFile.getConstantPool());

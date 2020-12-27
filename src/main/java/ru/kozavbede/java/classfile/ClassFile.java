@@ -5,14 +5,28 @@ import ru.kozavbede.java.interfaces.Interface;
 
 public class ClassFile {
 
-	private final int minorVersion;
-	private final int majorVersion;
+	private int minorVersion;
+	private int majorVersion;
 
 	private IInfo[] constantPool;
 	private Interface[] interfaces;
 
-	public ClassFile(int minorVersion, int majorVersion) {
+	public ClassFile() {
+	}
+
+	public int getMinorVersion() {
+		return minorVersion;
+	}
+
+	public void setMinorVersion(int minorVersion) {
 		this.minorVersion = minorVersion;
+	}
+
+	public int getMajorVersion() {
+		return majorVersion;
+	}
+
+	public void setMajorVersion(int majorVersion) {
 		this.majorVersion = majorVersion;
 	}
 
