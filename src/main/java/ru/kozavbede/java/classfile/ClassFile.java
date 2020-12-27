@@ -1,6 +1,6 @@
 package ru.kozavbede.java.classfile;
 
-import ru.kozavbede.java.constpool.IInfo;
+import ru.kozavbede.java.constpool.IConstantPoolRow;
 import ru.kozavbede.java.interfaces.Interface;
 
 public class ClassFile {
@@ -8,7 +8,7 @@ public class ClassFile {
 	private int minorVersion;
 	private int majorVersion;
 
-	private IInfo[] constantPool;
+	private IConstantPoolRow[] constantPool;
 	private Interface[] interfaces;
 
 	public ClassFile() {
@@ -30,11 +30,11 @@ public class ClassFile {
 		this.majorVersion = majorVersion;
 	}
 
-	public IInfo[] getConstantPool() {
+	public IConstantPoolRow[] getConstantPool() {
 		return constantPool;
 	}
 
-	public void setConstantPool(IInfo[] infos) {
+	public void setConstantPool(IConstantPoolRow[] infos) {
 		this.constantPool = infos;
 	}
 

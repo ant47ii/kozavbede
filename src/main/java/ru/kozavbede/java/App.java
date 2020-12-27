@@ -6,9 +6,9 @@ import java.io.InputStream;
 
 import ru.kozavbede.java.classfile.ClassFile;
 import ru.kozavbede.java.classfile.ClassFileReader;
-import ru.kozavbede.java.constpool.IInfo;
+import ru.kozavbede.java.constpool.IConstantPoolRow;
+import ru.kozavbede.java.constpool.impl.BaseRefInfo;
 import ru.kozavbede.java.constpool.impl.ClassInfo;
-import ru.kozavbede.java.constpool.impl.MethodRefInfo;
 import ru.kozavbede.java.constpool.impl.NameAndTypeInfo;
 import ru.kozavbede.java.constpool.impl.StringInfo;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
@@ -24,9 +24,9 @@ public class App {
 		}
 	}
 
-	private static void printConstantPool(IInfo[] infos) {
+	private static void printConstantPool(IConstantPoolRow[] infos) {
 		System.out.println("Constant pool:");
-		for (IInfo info : infos) {
+		for (IConstantPoolRow info : infos) {
 			if (info == null) {
 				continue;
 			}
@@ -38,7 +38,7 @@ public class App {
 		}
 	}
 
-	private static String getDisplayValue(IInfo[] infos, IInfo info) {
+	private static String getDisplayValue(IConstantPoolRow[] infos, IConstantPoolRow info) {
 		switch (info.getTag()) {
 		case STRING:
 			StringInfo stringInfo = (StringInfo) info;
@@ -56,24 +56,24 @@ public class App {
 		case FIELD_REF:
 		case INTERFACE_METHOD_REF:
 		case METHOD_REF:
-			MethodRefInfo methodrefInfo = (MethodRefInfo) info;
-			ClassInfo clsInfo = getClassInfoInfo(infos, methodrefInfo.getClassIndex());
-			NameAndTypeInfo typeInfo = getNameAndTypeInfo(infos, methodrefInfo.getNameAndTypeIndex());
+			BaseRefInfo refInfo = (BaseRefInfo) info;
+			ClassInfo clsInfo = getClassInfoInfo(infos, refInfo.getClassIndex());
+			NameAndTypeInfo typeInfo = getNameAndTypeInfo(infos, refInfo.getNameAndTypeIndex());
 			return getDisplayValue(infos, clsInfo) + "." + getDisplayValue(infos, typeInfo);
 		}
 
 		return "";
 	}
 
-	private static Utf8Info getUtf8Info(IInfo[] infos, int index) {
+	private static Utf8Info getUtf8Info(IConstantPoolRow[] infos, int index) {
 		return (Utf8Info) infos[index - 1];
 	}
 
-	private static ClassInfo getClassInfoInfo(IInfo[] infos, int index) {
+	private static ClassInfo getClassInfoInfo(IConstantPoolRow[] infos, int index) {
 		return (ClassInfo) infos[index - 1];
 	}
 
-	private static NameAndTypeInfo getNameAndTypeInfo(IInfo[] infos, int index) {
+	private static NameAndTypeInfo getNameAndTypeInfo(IConstantPoolRow[] infos, int index) {
 		return (NameAndTypeInfo) infos[index - 1];
 	}
 

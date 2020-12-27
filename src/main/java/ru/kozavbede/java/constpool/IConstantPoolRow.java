@@ -5,7 +5,7 @@ package ru.kozavbede.java.constpool;
  * Запись пула констант.
  *
  */
-public interface IInfo {
+public interface IConstantPoolRow {
 
 	Tag getTag();
 

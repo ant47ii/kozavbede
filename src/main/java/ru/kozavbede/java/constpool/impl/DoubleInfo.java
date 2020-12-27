@@ -1,9 +1,9 @@
 package ru.kozavbede.java.constpool.impl;
 
-import ru.kozavbede.java.constpool.BaseInfo;
+import ru.kozavbede.java.constpool.BaseConstantPoolRow;
 import ru.kozavbede.java.constpool.Tag;
 
-public class DoubleInfo extends BaseInfo {
+public class DoubleInfo extends BaseConstantPoolRow {
 
 	private final double value;
 

@@ -1,13 +1,13 @@
 package ru.kozavbede.java.constpool.impl;
 
-import ru.kozavbede.java.constpool.BaseInfo;
+import ru.kozavbede.java.constpool.BaseConstantPoolRow;
 
-public abstract class BaseRefInfo extends BaseInfo {
+public abstract class BaseRefInfo extends BaseConstantPoolRow {
 
 	private final int classIndex;
 	private final int nameAndTypeIndex;
 
-	public BaseRefInfo(int index, int classIndex, int nameAndTypeIndex) {
+	protected BaseRefInfo(int index, int classIndex, int nameAndTypeIndex) {
 		super(index);
 		this.classIndex = classIndex;
 		this.nameAndTypeIndex = nameAndTypeIndex;

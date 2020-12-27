@@ -1,10 +1,10 @@
 package ru.kozavbede.java.constpool;
 
-public abstract class BaseInfo implements IInfo {
+public abstract class BaseConstantPoolRow implements IConstantPoolRow {
 
 	protected int index;
 
-	protected BaseInfo(int index) {
+	protected BaseConstantPoolRow(int index) {
 		this.index = index;
 	}
 

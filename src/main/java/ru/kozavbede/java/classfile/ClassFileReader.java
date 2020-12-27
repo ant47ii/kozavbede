@@ -3,20 +3,20 @@ package ru.kozavbede.java.classfile;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ru.kozavbede.java.constpool.IInfo;
-import ru.kozavbede.java.constpool.InfoReader;
+import ru.kozavbede.java.constpool.IConstantPoolRow;
+import ru.kozavbede.java.constpool.ConstantPoolReader;
 import ru.kozavbede.java.interfaces.Interface;
 import ru.kozavbede.java.interfaces.InterfaceReader;
 import ru.kozavbede.java.reader.BaseInputStreamReader;
 
 public class ClassFileReader extends BaseInputStreamReader<ClassFile> {
 
-	private final InfoReader infoReader;
+	private final ConstantPoolReader infoReader;
 	private final InterfaceReader interfaceReader;
 
 	public ClassFileReader(InputStream is) {
 		super(is);
-		this.infoReader = new InfoReader(is);
+		this.infoReader = new ConstantPoolReader(is);
 		this.interfaceReader = new InterfaceReader(is);
 	}
 
@@ -42,7 +42,7 @@ public class ClassFileReader extends BaseInputStreamReader<ClassFile> {
 	}
 
 	private void readConstantPool(ClassFile classFile) throws IOException {
-		IInfo[] constantPool = infoReader.read();
+		IConstantPoolRow[] constantPool = infoReader.read();
 		classFile.setConstantPool(constantPool);
 	}
 
