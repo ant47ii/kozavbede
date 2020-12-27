@@ -22,4 +22,8 @@ public class Utf8Info extends BaseInfo {
 		return value;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
 }
