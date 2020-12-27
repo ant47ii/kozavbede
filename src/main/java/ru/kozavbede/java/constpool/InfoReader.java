@@ -34,7 +34,11 @@ public class InfoReader extends BaseInputStreamReader<IInfo[]> {
 			}
 
 			infos[i] = builder.buildTag(tag, i + 1, this);
-
+			if (tag == Tag.LONG || tag == Tag.DOUBLE) {
+				// then the next usable item in the pool is located at index n+2. The
+				// constant_pool index n+1 must be valid but is considered unusable.
+				i++;
+			}
 		}
 		return infos;
 	}

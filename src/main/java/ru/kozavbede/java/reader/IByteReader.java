@@ -10,6 +10,14 @@ import java.io.IOException;
 public interface IByteReader {
 
 	/**
+	 * Прочитать 8 байта как число.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	long read8Long() throws IOException;
+
+	/**
 	 * Прочитать 4 байта как число.
 	 * 
 	 * @return

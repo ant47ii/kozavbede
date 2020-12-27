@@ -3,8 +3,10 @@ package ru.kozavbede.java.constpool;
 import java.io.IOException;
 
 import ru.kozavbede.java.constpool.impl.ClassInfo;
+import ru.kozavbede.java.constpool.impl.DoubleInfo;
 import ru.kozavbede.java.constpool.impl.FloatInfo;
 import ru.kozavbede.java.constpool.impl.IntegerInfo;
+import ru.kozavbede.java.constpool.impl.LongInfo;
 import ru.kozavbede.java.constpool.impl.MethodrefInfo;
 import ru.kozavbede.java.constpool.impl.NameAndTypeInfo;
 import ru.kozavbede.java.constpool.impl.StringInfo;
@@ -31,6 +33,10 @@ public class InfoBuilder {
 			return createInteger(tagIndex, reader);
 		case FLOAT:
 			return createFloat(tagIndex, reader);
+		case LONG:
+			return createLong(tagIndex, reader);
+		case DOUBLE:
+			return createDouble(tagIndex, reader);
 		case FIELD_REF:
 		case METHOD_REF:
 		case INTERFACE_METHOD_REF:
@@ -76,5 +82,16 @@ public class InfoBuilder {
 	private IInfo createFloat(int tagIndex, IByteReader reader) throws IOException {
 		float value = Float.intBitsToFloat(reader.read4Int());
 		return new FloatInfo(tagIndex, value);
+	}
+
+	private IInfo createLong(int tagIndex, IByteReader reader) throws IOException {
+		long value = reader.read8Long();
+		return new LongInfo(tagIndex, value);
+	}
+
+	private IInfo createDouble(int tagIndex, IByteReader reader) throws IOException {
+		long longValue = reader.read8Long();
+		double value = Double.longBitsToDouble(longValue);
+		return new DoubleInfo(tagIndex, value);
 	}
 }

@@ -20,6 +20,12 @@ public abstract class BaseInputStreamReader<T> implements IByteReader {
 	public abstract T read() throws IOException;
 
 	@Override
+	public long read8Long() throws IOException {
+		byte[] bytes = readNBytes(8);
+		return readLong(bytes);
+	}
+
+	@Override
 	public int read4Int() throws IOException {
 		byte[] bytes = readNBytes(4);
 		return read(bytes);
@@ -45,12 +51,24 @@ public abstract class BaseInputStreamReader<T> implements IByteReader {
 	private int read(byte[] bytes) {
 		int result = 0;
 		for (int i = 0; i < bytes.length; i++) {
-			result |= read(bytes[bytes.length - i - 1], i * 8);
+			result |= readInt(bytes[bytes.length - i - 1], i * 8);
 		}
 		return result;
 	}
 
-	private int read(byte b, int position) {
+	private long readLong(byte[] bytes) {
+		long result = 0;
+		for (int i = 0; i < bytes.length; i++) {
+			result |= readLong(bytes[bytes.length - i - 1], i * 8);
+		}
+		return result;
+	}
+
+	private int readInt(byte b, int position) {
 		return Byte.toUnsignedInt(b) << position;
+	}
+
+	private long readLong(byte b, int position) {
+		return Byte.toUnsignedLong(b) << position;
 	}
 }

@@ -33,6 +33,9 @@ public class App {
 	private static void printConstantPool(IInfo[] infos) {
 		System.out.println("Constant pool:");
 		for (IInfo info : infos) {
+			if (info == null) {
+				continue;
+			}
 			int index = info.getIndex();
 			String tagName = info.getTag().getDisplayName();
 			String value = info.toString();
