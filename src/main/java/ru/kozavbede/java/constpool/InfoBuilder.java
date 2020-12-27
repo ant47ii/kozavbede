@@ -3,6 +3,8 @@ package ru.kozavbede.java.constpool;
 import java.io.IOException;
 
 import ru.kozavbede.java.constpool.impl.ClassInfo;
+import ru.kozavbede.java.constpool.impl.FloatInfo;
+import ru.kozavbede.java.constpool.impl.IntegerInfo;
 import ru.kozavbede.java.constpool.impl.MethodrefInfo;
 import ru.kozavbede.java.constpool.impl.NameAndTypeInfo;
 import ru.kozavbede.java.constpool.impl.StringInfo;
@@ -25,6 +27,10 @@ public class InfoBuilder {
 			return createString(tagIndex, reader);
 		case UTF8:
 			return createUtf8(tagIndex, reader);
+		case INTEGER:
+			return createInteger(tagIndex, reader);
+		case FLOAT:
+			return createFloat(tagIndex, reader);
 		case FIELD_REF:
 		case METHOD_REF:
 		case INTERFACE_METHOD_REF:
@@ -53,12 +59,22 @@ public class InfoBuilder {
 	private IInfo createUtf8(int tagIndex, IByteReader reader) throws IOException {
 		int len = reader.read2Int();
 		byte[] str = reader.readNBytes(len);
-		return new Utf8Info(tagIndex, new String(str)); // TODO: напрашивается пул строк
+		return new Utf8Info(tagIndex, new String(str));
 	}
 
 	private IInfo createRef(int tagIndex, IByteReader reader) throws IOException {
 		int classIndex = reader.read2Int();
 		int nameAndTypeIndex = reader.read2Int();
 		return new MethodrefInfo(tagIndex, classIndex, nameAndTypeIndex);
+	}
+
+	private IInfo createInteger(int tagIndex, IByteReader reader) throws IOException {
+		int value = reader.read4Int();
+		return new IntegerInfo(tagIndex, value);
+	}
+
+	private IInfo createFloat(int tagIndex, IByteReader reader) throws IOException {
+		float value = Float.intBitsToFloat(reader.read4Int());
+		return new FloatInfo(tagIndex, value);
 	}
 }
