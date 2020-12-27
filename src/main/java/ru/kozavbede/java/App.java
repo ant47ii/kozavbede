@@ -11,7 +11,7 @@ import ru.kozavbede.java.constpool.IInfo;
 import ru.kozavbede.java.constpool.InfoBuilder;
 import ru.kozavbede.java.constpool.InfoReader;
 import ru.kozavbede.java.constpool.impl.ClassInfo;
-import ru.kozavbede.java.constpool.impl.MethodrefInfo;
+import ru.kozavbede.java.constpool.impl.MethodRefInfo;
 import ru.kozavbede.java.constpool.impl.NameAndTypeInfo;
 import ru.kozavbede.java.constpool.impl.StringInfo;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
@@ -62,7 +62,7 @@ public class App {
 		case FIELD_REF:
 		case INTERFACE_METHOD_REF:
 		case METHOD_REF:
-			MethodrefInfo methodrefInfo = (MethodrefInfo) info;
+			MethodRefInfo methodrefInfo = (MethodRefInfo) info;
 			ClassInfo clsInfo = getClassInfoInfo(infos, methodrefInfo.getClassIndex());
 			NameAndTypeInfo typeInfo = getNameAndTypeInfo(infos, methodrefInfo.getNameAndTypeIndex());
 			return getDisplayValue(infos, clsInfo) + "." + getDisplayValue(infos, typeInfo);

@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import ru.kozavbede.java.constpool.impl.ClassInfo;
 import ru.kozavbede.java.constpool.impl.DoubleInfo;
+import ru.kozavbede.java.constpool.impl.FieldRefInfo;
 import ru.kozavbede.java.constpool.impl.FloatInfo;
 import ru.kozavbede.java.constpool.impl.IntegerInfo;
+import ru.kozavbede.java.constpool.impl.InterfaceMethodRefInfo;
 import ru.kozavbede.java.constpool.impl.LongInfo;
-import ru.kozavbede.java.constpool.impl.MethodrefInfo;
+import ru.kozavbede.java.constpool.impl.MethodRefInfo;
 import ru.kozavbede.java.constpool.impl.NameAndTypeInfo;
 import ru.kozavbede.java.constpool.impl.StringInfo;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
@@ -38,9 +40,11 @@ public class InfoBuilder {
 		case DOUBLE:
 			return createDouble(tagIndex, reader);
 		case FIELD_REF:
+			return createFieldRef(tagIndex, reader);
 		case METHOD_REF:
+			return createMethodRef(tagIndex, reader);
 		case INTERFACE_METHOD_REF:
-			return createRef(tagIndex, reader);
+			return createInterfaceMethodRef(tagIndex, reader);
 		default:
 			return null;
 		}
@@ -68,10 +72,22 @@ public class InfoBuilder {
 		return new Utf8Info(tagIndex, new String(str));
 	}
 
-	private IInfo createRef(int tagIndex, IByteReader reader) throws IOException {
+	private IInfo createFieldRef(int tagIndex, IByteReader reader) throws IOException {
 		int classIndex = reader.read2Int();
 		int nameAndTypeIndex = reader.read2Int();
-		return new MethodrefInfo(tagIndex, classIndex, nameAndTypeIndex);
+		return new FieldRefInfo(tagIndex, classIndex, nameAndTypeIndex);
+	}
+
+	private IInfo createInterfaceMethodRef(int tagIndex, IByteReader reader) throws IOException {
+		int classIndex = reader.read2Int();
+		int nameAndTypeIndex = reader.read2Int();
+		return new InterfaceMethodRefInfo(tagIndex, classIndex, nameAndTypeIndex);
+	}
+
+	private IInfo createMethodRef(int tagIndex, IByteReader reader) throws IOException {
+		int classIndex = reader.read2Int();
+		int nameAndTypeIndex = reader.read2Int();
+		return new MethodRefInfo(tagIndex, classIndex, nameAndTypeIndex);
 	}
 
 	private IInfo createInteger(int tagIndex, IByteReader reader) throws IOException {
