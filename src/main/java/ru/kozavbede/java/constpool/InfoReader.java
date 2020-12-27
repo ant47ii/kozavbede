@@ -25,7 +25,7 @@ public class InfoReader extends BaseInputStreamReader<IInfo[]> {
 	}
 
 	private IInfo[] readInfo(int constantPoolCount) throws IOException {
-		IInfo[] infos = new IInfo[constantPoolCount];
+		IInfo[] infos = new IInfo[constantPoolCount - 1];
 		for (int i = 0; i < constantPoolCount - 1; i++) {
 			int infoTagType = read1Int();
 			Tag tag = Tag.fromIndex(infoTagType);
@@ -33,7 +33,7 @@ public class InfoReader extends BaseInputStreamReader<IInfo[]> {
 				// TODO: throw ex...
 			}
 
-			infos[i] = builder.buildTag(tag, i, this);
+			infos[i] = builder.buildTag(tag, i + 1, this);
 
 		}
 		return infos;

@@ -17,4 +17,9 @@ public class Utf8Info extends BaseInfo {
 		return Tag.UTF8;
 	}
 
+	@Override
+	public String toString() {
+		return value;
+	}
+
 }

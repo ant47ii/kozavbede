@@ -3,10 +3,9 @@ package ru.kozavbede.java.constpool.impl;
 import ru.kozavbede.java.constpool.BaseInfo;
 import ru.kozavbede.java.constpool.Tag;
 
-public final class ClassInfo extends BaseInfo {
+public class ClassInfo extends BaseInfo {
 
-	private final int nameIndex; // ссылка на utf8
-	private Utf8Info utf8Info;
+	private final int nameIndex;
 
 	public ClassInfo(int index, int nameIndex) {
 		super(index);
@@ -22,8 +21,9 @@ public final class ClassInfo extends BaseInfo {
 		return nameIndex;
 	}
 
-	public Utf8Info getNameInfo() {
-		return utf8Info;
+	@Override
+	public String toString() {
+		return "#" + nameIndex;
 	}
 
 }

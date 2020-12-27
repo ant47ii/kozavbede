@@ -5,11 +5,11 @@ import ru.kozavbede.java.constpool.Tag;
 
 public class StringInfo extends BaseInfo {
 
-	private final int stringIndex;
+	private final int nameIndex;
 
-	public StringInfo(int index, int stringIndex) {
+	public StringInfo(int index, int nameIndex) {
 		super(index);
-		this.stringIndex = stringIndex;
+		this.nameIndex = nameIndex;
 	}
 
 	@Override
@@ -17,4 +17,12 @@ public class StringInfo extends BaseInfo {
 		return Tag.STRING;
 	}
 
+	@Override
+	public String toString() {
+		return "#" + nameIndex;
+	}
+
+	public int getNameIndex() {
+		return nameIndex;
+	}
 }

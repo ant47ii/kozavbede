@@ -8,4 +8,7 @@ public abstract class BaseInfo implements IInfo {
 		this.index = index;
 	}
 
+	public int getIndex() {
+		return index;
+	}
 }

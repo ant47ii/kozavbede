@@ -20,4 +20,16 @@ public class MethodrefInfo extends BaseInfo implements IRef {
 		return Tag.METHOD_REF;
 	}
 
+	@Override
+	public String toString() {
+		return "#" + classIndex + ".#" + nameAndTypeIndex;
+	}
+
+	public int getClassIndex() {
+		return classIndex;
+	}
+
+	public int getNameAndTypeIndex() {
+		return nameAndTypeIndex;
+	}
 }

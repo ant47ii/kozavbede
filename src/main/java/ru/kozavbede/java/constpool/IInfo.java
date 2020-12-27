@@ -8,4 +8,6 @@ package ru.kozavbede.java.constpool;
 public interface IInfo {
 
 	Tag getTag();
+
+	int getIndex();
 }
