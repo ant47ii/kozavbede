@@ -18,9 +18,10 @@ public enum Tag {
 	METHOD_REF("Methodref", 10),
 	INTERFACE_METHOD_REF("InterfaceMethodref", 11),
 	NAME_AND_TYPE("NameAndType", 12),
-	METHOD_HANDLE("MethodHandle", 15),
-	METHOD_TYPE("MethodType", 16),
-	INVOKE_DYNAMIC("InvokeDynamic", 18);
+	//METHOD_HANDLE("MethodHandle", 15),
+	//METHOD_TYPE("MethodType", 16),
+	//INVOKE_DYNAMIC("InvokeDynamic", 18)
+	;
 	
 	private final String name;
 	private final int index;

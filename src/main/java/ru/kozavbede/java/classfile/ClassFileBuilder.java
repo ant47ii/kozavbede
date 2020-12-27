@@ -18,4 +18,10 @@ public class ClassFileBuilder {
 		return new ClassFile(minorVersion, majorVersion);
 	}
 
+	public void readClassInfo(IByteReader reader) throws IOException {
+		int accessFlags = reader.read2Int();
+		int thisClass = reader.read2Int();
+		int superClass = reader.read2Int();
+	}
+
 }

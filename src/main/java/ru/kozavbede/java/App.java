@@ -8,8 +8,6 @@ import ru.kozavbede.java.classfile.ClassFile;
 import ru.kozavbede.java.classfile.ClassFileBuilder;
 import ru.kozavbede.java.classfile.ClassFileReader;
 import ru.kozavbede.java.constpool.IInfo;
-import ru.kozavbede.java.constpool.InfoBuilder;
-import ru.kozavbede.java.constpool.InfoReader;
 import ru.kozavbede.java.constpool.impl.ClassInfo;
 import ru.kozavbede.java.constpool.impl.MethodRefInfo;
 import ru.kozavbede.java.constpool.impl.NameAndTypeInfo;
@@ -23,10 +21,7 @@ public class App {
 			ClassFileReader classFileReader = new ClassFileReader(is, new ClassFileBuilder());
 			ClassFile classFile = classFileReader.read();
 
-			InfoReader infoReader = new InfoReader(is, new InfoBuilder());
-			IInfo[] infos = infoReader.read();
-
-			printConstantPool(infos);
+			printConstantPool(classFile.getConstantPool());
 		}
 	}
 
