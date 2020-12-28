@@ -22,7 +22,9 @@ public class AttributeReader extends MultiInputStreamReader<Attribute[]> {
 			// information in bytes. The length does not include the initial six bytes that
 			// contain the attribute_name_index and attribute_length items.
 			int attributeLength = read4Int();
-			int info = read1Int();
+			// фиктивно прочитаем тело атрибута.
+			// здесь необходим пул констант т.к. нужно определение attributeNameIndex
+			readNBytes(attributeLength);
 
 			Attribute attribute = new Attribute(attributeNameIndex);
 			attributes[i] = attribute;
