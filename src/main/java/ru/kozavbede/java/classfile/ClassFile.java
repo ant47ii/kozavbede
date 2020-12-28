@@ -1,6 +1,7 @@
 package ru.kozavbede.java.classfile;
 
 import ru.kozavbede.java.constpool.IConstantPoolRow;
+import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.interfaces.Interface;
 
 public class ClassFile {
@@ -10,6 +11,7 @@ public class ClassFile {
 
 	private IConstantPoolRow[] constantPool;
 	private Interface[] interfaces;
+	private Field[] fields;
 
 	public ClassFile() {
 	}
@@ -44,6 +46,14 @@ public class ClassFile {
 
 	public void setInterfaces(Interface[] interfaces) {
 		this.interfaces = interfaces;
+	}
+
+	public Field[] getFields() {
+		return fields;
+	}
+
+	public void setFields(Field[] fields) {
+		this.fields = fields;
 	}
 
 }

@@ -14,25 +14,16 @@ import ru.kozavbede.java.constpool.impl.MethodRefInfo;
 import ru.kozavbede.java.constpool.impl.NameAndTypeInfo;
 import ru.kozavbede.java.constpool.impl.StringInfo;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
-import ru.kozavbede.java.reader.BaseInputStreamReader;
+import ru.kozavbede.java.reader.MultiInputStreamReader;
 
-public class ConstantPoolReader extends BaseInputStreamReader<IConstantPoolRow[]> {
+public class ConstantPoolReader extends MultiInputStreamReader<IConstantPoolRow[]> {
 
 	public ConstantPoolReader(InputStream is) {
 		super(is);
 	}
 
 	@Override
-	public IConstantPoolRow[] read() throws IOException {
-		int constantPoolCount = read2Int();
-		if (constantPoolCount > 0) {
-			return readInfo(constantPoolCount);
-		}
-
-		return new IConstantPoolRow[0];
-	}
-
-	private IConstantPoolRow[] readInfo(int constantPoolCount) throws IOException {
+	public IConstantPoolRow[] read(int constantPoolCount) throws IOException {
 		IConstantPoolRow[] infos = new IConstantPoolRow[constantPoolCount - 1];
 		for (int i = 0; i < constantPoolCount - 1; i++) {
 			int infoTagType = read1Int();

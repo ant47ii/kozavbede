@@ -17,8 +17,6 @@ public abstract class BaseInputStreamReader<T> implements IByteReader {
 		this.is = is;
 	}
 
-	public abstract T read() throws IOException;
-
 	@Override
 	public long read8Long() throws IOException {
 		byte[] bytes = readNBytes(8);

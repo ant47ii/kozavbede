@@ -3,21 +3,25 @@ package ru.kozavbede.java.classfile;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ru.kozavbede.java.constpool.IConstantPoolRow;
 import ru.kozavbede.java.constpool.ConstantPoolReader;
+import ru.kozavbede.java.constpool.IConstantPoolRow;
+import ru.kozavbede.java.fields.Field;
+import ru.kozavbede.java.fields.FieldReader;
 import ru.kozavbede.java.interfaces.Interface;
 import ru.kozavbede.java.interfaces.InterfaceReader;
-import ru.kozavbede.java.reader.BaseInputStreamReader;
+import ru.kozavbede.java.reader.SingleInputStreamReader;
 
-public class ClassFileReader extends BaseInputStreamReader<ClassFile> {
+public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 
 	private final ConstantPoolReader infoReader;
 	private final InterfaceReader interfaceReader;
+	private final FieldReader fieldReader;
 
 	public ClassFileReader(InputStream is) {
 		super(is);
 		this.infoReader = new ConstantPoolReader(is);
 		this.interfaceReader = new InterfaceReader(is);
+		this.fieldReader = new FieldReader(is);
 	}
 
 	@Override
@@ -28,6 +32,7 @@ public class ClassFileReader extends BaseInputStreamReader<ClassFile> {
 		readConstantPool(classFile);
 		readClassInfo(classFile);
 		readInterfaces(classFile);
+		readFields(classFile);
 
 		return classFile;
 	}
@@ -42,7 +47,8 @@ public class ClassFileReader extends BaseInputStreamReader<ClassFile> {
 	}
 
 	private void readConstantPool(ClassFile classFile) throws IOException {
-		IConstantPoolRow[] constantPool = infoReader.read();
+		int constantPoolCount = read2Int();
+		IConstantPoolRow[] constantPool = infoReader.read(constantPoolCount);
 		classFile.setConstantPool(constantPool);
 	}
 
@@ -54,8 +60,15 @@ public class ClassFileReader extends BaseInputStreamReader<ClassFile> {
 	}
 
 	private void readInterfaces(ClassFile classFile) throws IOException {
-		Interface[] interfaces = interfaceReader.read();
+		int interfaceCount = read2Int();
+		Interface[] interfaces = interfaceReader.read(interfaceCount);
 		classFile.setInterfaces(interfaces);
+	}
+
+	private void readFields(ClassFile classFile) throws IOException {
+		int fieldCount = read2Int();
+		Field[] fields = fieldReader.read(fieldCount);
+		classFile.setFields(fields);
 	}
 
 }
