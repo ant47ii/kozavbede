@@ -1,14 +1,14 @@
-package ru.kozavbede.java.fields;
+package ru.kozavbede.java.methods;
 
 import ru.kozavbede.java.attributes.Attribute;
 
-public class Field {
+public class Method {
 
 	private final int nameIndex;
 	private final int descriptorIndex;
 	private Attribute[] attribures;
 
-	public Field(int nameIndex, int descriptorIndex) {
+	public Method(int nameIndex, int descriptorIndex) {
 		this.nameIndex = nameIndex;
 		this.descriptorIndex = descriptorIndex;
 	}

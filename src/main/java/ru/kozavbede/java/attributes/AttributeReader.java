@@ -1,4 +1,4 @@
-package ru.kozavbede.java.fields.attributes;
+package ru.kozavbede.java.attributes;
 
 import java.io.IOException;
 import java.io.InputStream;

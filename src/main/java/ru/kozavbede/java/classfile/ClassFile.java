@@ -3,6 +3,7 @@ package ru.kozavbede.java.classfile;
 import ru.kozavbede.java.constpool.IConstantPoolRow;
 import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.interfaces.Interface;
+import ru.kozavbede.java.methods.Method;
 
 public class ClassFile {
 
@@ -12,6 +13,7 @@ public class ClassFile {
 	private IConstantPoolRow[] constantPool;
 	private Interface[] interfaces;
 	private Field[] fields;
+	private Method[] methods;
 
 	public ClassFile() {
 	}
@@ -54,6 +56,14 @@ public class ClassFile {
 
 	public void setFields(Field[] fields) {
 		this.fields = fields;
+	}
+
+	public Method[] getMethods() {
+		return methods;
+	}
+
+	public void setMethods(Method[] methods) {
+		this.methods = methods;
 	}
 
 }

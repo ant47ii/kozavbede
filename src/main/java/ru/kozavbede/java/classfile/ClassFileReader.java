@@ -9,6 +9,8 @@ import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.fields.FieldReader;
 import ru.kozavbede.java.interfaces.Interface;
 import ru.kozavbede.java.interfaces.InterfaceReader;
+import ru.kozavbede.java.methods.Method;
+import ru.kozavbede.java.methods.MethodReader;
 import ru.kozavbede.java.reader.SingleInputStreamReader;
 
 public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
@@ -16,12 +18,14 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 	private final ConstantPoolReader infoReader;
 	private final InterfaceReader interfaceReader;
 	private final FieldReader fieldReader;
+	private final MethodReader methodReader;
 
 	public ClassFileReader(InputStream is) {
 		super(is);
 		this.infoReader = new ConstantPoolReader(is);
 		this.interfaceReader = new InterfaceReader(is);
 		this.fieldReader = new FieldReader(is);
+		this.methodReader = new MethodReader(is);
 	}
 
 	@Override
@@ -33,6 +37,7 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 		readClassInfo(classFile);
 		readInterfaces(classFile);
 		readFields(classFile);
+		readMethods(classFile);
 
 		return classFile;
 	}
@@ -69,6 +74,12 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 		int fieldCount = read2Int();
 		Field[] fields = fieldReader.read(fieldCount);
 		classFile.setFields(fields);
+	}
+
+	private void readMethods(ClassFile classFile) throws IOException {
+		int methodsCount = read2Int();
+		Method[] methods = methodReader.read(methodsCount);
+		classFile.setMethods(methods);
 	}
 
 }

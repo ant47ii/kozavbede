@@ -3,7 +3,7 @@ package ru.kozavbede.java.fields;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ru.kozavbede.java.fields.attributes.AttributeReader;
+import ru.kozavbede.java.attributes.AttributeReader;
 import ru.kozavbede.java.reader.MultiInputStreamReader;
 
 public class FieldReader extends MultiInputStreamReader<Field[]> {
@@ -24,8 +24,8 @@ public class FieldReader extends MultiInputStreamReader<Field[]> {
 			int descriptorIndex = read2Int();
 
 			Field field = new Field(nameIndex, descriptorIndex);
-			int countFilds = read2Int();
-			field.setAttribures(attributeReader.read(countFilds));
+			int attributesCount = read2Int();
+			field.setAttribures(attributeReader.read(attributesCount));
 			fields[i] = field;
 		}
 		return fields;

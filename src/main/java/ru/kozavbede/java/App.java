@@ -14,6 +14,7 @@ import ru.kozavbede.java.constpool.impl.StringInfo;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
 import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.interfaces.Interface;
+import ru.kozavbede.java.methods.Method;
 
 public class App {
 
@@ -25,6 +26,16 @@ public class App {
 			printConstantPool(classFile.getConstantPool());
 			printInterfaces(classFile.getConstantPool(), classFile.getInterfaces());
 			printFileds(classFile.getConstantPool(), classFile.getFields());
+			printMethods(classFile.getConstantPool(), classFile.getMethods());
+		}
+	}
+
+	private static void printMethods(IConstantPoolRow[] constPool, Method[] methods) {
+		System.out.println("Methods:");
+		for (Method method : methods) {
+			Utf8Info name = getUtf8Info(constPool, method.getNameIndex());
+			Utf8Info descriptor = getUtf8Info(constPool, method.getDescriptorIndex());
+			System.out.println(String.format(" %s %s", name, descriptor));
 		}
 	}
 
