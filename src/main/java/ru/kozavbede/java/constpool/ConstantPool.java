@@ -30,7 +30,7 @@ public class ConstantPool implements Iterable<IConstantPoolRow> {
 	}
 
 	public <T extends IConstantPoolRow> T get(int index, Class<T> type) {
-		return type.cast(pool[index]);
+		return type.cast(pool[index - 1]);
 	}
 
 	private class Itr implements Iterator<IConstantPoolRow> {

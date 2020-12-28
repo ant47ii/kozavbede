@@ -25,7 +25,6 @@ public class App {
 			ClassFile classFile = classFileReader.read();
 
 			ConstantPool constPool = classFile.getConstantPool();
-
 			printConstantPool(constPool);
 			printInterfaces(constPool, classFile.getInterfaces());
 			printFileds(constPool, classFile.getFields());
@@ -103,15 +102,15 @@ public class App {
 	}
 
 	private static Utf8Info getUtf8Info(ConstantPool constPool, int index) {
-		return constPool.get(index - 1, Utf8Info.class);
+		return constPool.get(index, Utf8Info.class);
 	}
 
 	private static ClassInfo getClassInfoInfo(ConstantPool constPool, int index) {
-		return constPool.get(index - 1, ClassInfo.class);
+		return constPool.get(index, ClassInfo.class);
 	}
 
 	private static NameAndTypeInfo getNameAndTypeInfo(ConstantPool constPool, int index) {
-		return constPool.get(index - 1, NameAndTypeInfo.class);
+		return constPool.get(index, NameAndTypeInfo.class);
 	}
 
 }
