@@ -1,23 +1,27 @@
 package ru.kozavbede.java.classfile;
 
 import ru.kozavbede.java.attributes.Attribute;
-import ru.kozavbede.java.constpool.IConstantPoolRow;
+import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.interfaces.Interface;
 import ru.kozavbede.java.methods.Method;
 
+/**
+ * 
+ * Файл класса.
+ *
+ */
 public class ClassFile {
 
 	private final ClassFileVersion version;
 	private final ClassFileInfo info;
-	// TODO : унести в класс
-	private final IConstantPoolRow[] constantPool;
+	private final ConstantPool constantPool;
 	private Interface[] interfaces;
 	private Field[] fields;
 	private Method[] methods;
 	private Attribute[] attributes;
 
-	public ClassFile(ClassFileVersion version, ClassFileInfo info, IConstantPoolRow[] constantPool) {
+	public ClassFile(ClassFileVersion version, ClassFileInfo info, ConstantPool constantPool) {
 		this.version = version;
 		this.info = info;
 		this.constantPool = constantPool;
@@ -31,7 +35,7 @@ public class ClassFile {
 		return info;
 	}
 
-	public IConstantPoolRow[] getConstantPool() {
+	public ConstantPool getConstantPool() {
 		return constantPool;
 	}
 

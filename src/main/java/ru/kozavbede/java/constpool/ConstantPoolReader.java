@@ -16,33 +16,31 @@ import ru.kozavbede.java.constpool.impl.StringInfo;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
 import ru.kozavbede.java.reader.MultiInputStreamReader;
 
-public class ConstantPoolReader extends MultiInputStreamReader<IConstantPoolRow[]> {
+public class ConstantPoolReader extends MultiInputStreamReader<ConstantPool> {
 
 	public ConstantPoolReader(InputStream is) {
 		super(is);
 	}
 
 	@Override
-	public IConstantPoolRow[] read(int constantPoolCount) throws IOException {
-		IConstantPoolRow[] infos = new IConstantPoolRow[constantPoolCount - 1];
+	public ConstantPool read(int constantPoolCount) throws IOException {
+		IConstantPoolRow[] rows = new IConstantPoolRow[constantPoolCount - 1];
 		for (int i = 0; i < constantPoolCount - 1; i++) {
 			int infoTagType = read1Int();
 			Tag tag = Tag.fromIndex(infoTagType);
-			if (tag == null) {
-				// TODO: throw ex...
-			}
 
-			infos[i] = readTag(tag, i + 1);
+			rows[i] = createRow(tag, i + 1);
 			if (tag == Tag.LONG || tag == Tag.DOUBLE) {
 				// then the next usable item in the pool is located at index n+2. The
 				// constant_pool index n+1 must be valid but is considered unusable.
 				i++;
 			}
 		}
-		return infos;
+
+		return new ConstantPool(rows);
 	}
 
-	private IConstantPoolRow readTag(Tag tag, int tagIndex) throws IOException {
+	private IConstantPoolRow createRow(Tag tag, int tagIndex) throws IOException {
 		switch (tag) {
 		case CLASS:
 			return createClass(tagIndex);

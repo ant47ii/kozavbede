@@ -5,8 +5,8 @@ import java.io.InputStream;
 
 import ru.kozavbede.java.attributes.Attribute;
 import ru.kozavbede.java.attributes.AttributeReader;
+import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.constpool.ConstantPoolReader;
-import ru.kozavbede.java.constpool.IConstantPoolRow;
 import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.fields.FieldReader;
 import ru.kozavbede.java.interfaces.Interface;
@@ -35,7 +35,7 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 	@Override
 	public ClassFile read() throws IOException {
 		ClassFileVersion classFileVersion = readVersion();
-		IConstantPoolRow[] constantPool = readConstantPool();
+		ConstantPool constantPool = readConstantPool();
 		ClassFileInfo info = readClassInfo();
 		ClassFile classFile = new ClassFile(classFileVersion, info, constantPool);
 
@@ -54,7 +54,7 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 		return new ClassFileVersion(minorVersion, majorVersion);
 	}
 
-	private IConstantPoolRow[] readConstantPool() throws IOException {
+	private ConstantPool readConstantPool() throws IOException {
 		int constantPoolCount = read2Int();
 		return infoReader.read(constantPoolCount);
 	}
