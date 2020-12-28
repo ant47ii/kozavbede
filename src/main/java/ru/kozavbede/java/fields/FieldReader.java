@@ -19,11 +19,11 @@ public class FieldReader extends MultiInputStreamReader<Field[]> {
 	public Field[] read(int fieldCount) throws IOException {
 		Field[] fields = new Field[fieldCount];
 		for (int i = 0; i < fieldCount; i++) {
-			int accessFlags = read2Int(); // TODO
+			int accessFlags = read2Int();
 			int nameIndex = read2Int();
 			int descriptorIndex = read2Int();
 
-			Field field = new Field(nameIndex, descriptorIndex);
+			Field field = new Field(accessFlags, nameIndex, descriptorIndex);
 			int attributesCount = read2Int();
 			field.setAttribures(attributeReader.read(attributesCount));
 			fields[i] = field;

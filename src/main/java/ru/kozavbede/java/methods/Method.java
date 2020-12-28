@@ -4,13 +4,19 @@ import ru.kozavbede.java.attributes.Attribute;
 
 public class Method {
 
+	private final int accessFlags;
 	private final int nameIndex;
 	private final int descriptorIndex;
 	private Attribute[] attribures;
 
-	public Method(int nameIndex, int descriptorIndex) {
+	public Method(int accessFlags, int nameIndex, int descriptorIndex) {
+		this.accessFlags = accessFlags;
 		this.nameIndex = nameIndex;
 		this.descriptorIndex = descriptorIndex;
+	}
+
+	public int getAccessFlags() {
+		return accessFlags;
 	}
 
 	public int getNameIndex() {

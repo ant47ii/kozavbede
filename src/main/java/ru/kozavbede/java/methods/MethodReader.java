@@ -19,12 +19,12 @@ public class MethodReader extends MultiInputStreamReader<Method[]> {
 	public Method[] read(int methodCount) throws IOException {
 		Method[] methods = new Method[methodCount];
 		for (int i = 0; i < methodCount; i++) {
-			int accessFlags = read2Int(); // TODO
+			int accessFlags = read2Int();
 			int nameIndex = read2Int();
 			int descriptorIndex = read2Int();
 			int attributesCount = read2Int();
 
-			Method method = new Method(nameIndex, descriptorIndex);
+			Method method = new Method(accessFlags, nameIndex, descriptorIndex);
 			method.setAttribures(attributeReader.read(attributesCount));
 			methods[i] = method;
 		}

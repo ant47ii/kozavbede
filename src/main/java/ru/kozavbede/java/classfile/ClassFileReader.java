@@ -3,6 +3,8 @@ package ru.kozavbede.java.classfile;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ru.kozavbede.java.attributes.Attribute;
+import ru.kozavbede.java.attributes.AttributeReader;
 import ru.kozavbede.java.constpool.ConstantPoolReader;
 import ru.kozavbede.java.constpool.IConstantPoolRow;
 import ru.kozavbede.java.fields.Field;
@@ -19,6 +21,7 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 	private final InterfaceReader interfaceReader;
 	private final FieldReader fieldReader;
 	private final MethodReader methodReader;
+	private final AttributeReader attributeReader;
 
 	public ClassFileReader(InputStream is) {
 		super(is);
@@ -26,42 +29,41 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 		this.interfaceReader = new InterfaceReader(is);
 		this.fieldReader = new FieldReader(is);
 		this.methodReader = new MethodReader(is);
+		this.attributeReader = new AttributeReader(is);
 	}
 
 	@Override
 	public ClassFile read() throws IOException {
-		ClassFile classFile = new ClassFile();
+		ClassFileVersion classFileVersion = readVersion();
+		IConstantPoolRow[] constantPool = readConstantPool();
+		ClassFileInfo info = readClassInfo();
+		ClassFile classFile = new ClassFile(classFileVersion, info, constantPool);
 
-		readVersion(classFile);
-		readConstantPool(classFile);
-		readClassInfo(classFile);
 		readInterfaces(classFile);
 		readFields(classFile);
 		readMethods(classFile);
+		readAttributes(classFile);
 
 		return classFile;
 	}
 
-	private void readVersion(ClassFile classFile) throws IOException {
+	private ClassFileVersion readVersion() throws IOException {
 		read4Int(); // magic
 		int minorVersion = read2Int();
 		int majorVersion = read2Int();
-
-		classFile.setMinorVersion(minorVersion);
-		classFile.setMajorVersion(majorVersion);
+		return new ClassFileVersion(minorVersion, majorVersion);
 	}
 
-	private void readConstantPool(ClassFile classFile) throws IOException {
+	private IConstantPoolRow[] readConstantPool() throws IOException {
 		int constantPoolCount = read2Int();
-		IConstantPoolRow[] constantPool = infoReader.read(constantPoolCount);
-		classFile.setConstantPool(constantPool);
+		return infoReader.read(constantPoolCount);
 	}
 
-	private void readClassInfo(ClassFile classFile) throws IOException {
-		// TODO : обернуть в структуру. Писать в classFile.
+	private ClassFileInfo readClassInfo() throws IOException {
 		int accessFlags = read2Int();
 		int thisClass = read2Int();
 		int superClass = read2Int();
+		return new ClassFileInfo(accessFlags, thisClass, superClass);
 	}
 
 	private void readInterfaces(ClassFile classFile) throws IOException {
@@ -82,4 +84,9 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 		classFile.setMethods(methods);
 	}
 
+	private void readAttributes(ClassFile classFile) throws IOException {
+		int attributeCount = read2Int();
+		Attribute[] attributes = attributeReader.read(attributeCount);
+		classFile.setAttributes(attributes);
+	}
 }

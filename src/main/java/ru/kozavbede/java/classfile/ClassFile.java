@@ -1,5 +1,6 @@
 package ru.kozavbede.java.classfile;
 
+import ru.kozavbede.java.attributes.Attribute;
 import ru.kozavbede.java.constpool.IConstantPoolRow;
 import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.interfaces.Interface;
@@ -7,39 +8,31 @@ import ru.kozavbede.java.methods.Method;
 
 public class ClassFile {
 
-	private int minorVersion;
-	private int majorVersion;
-
-	private IConstantPoolRow[] constantPool;
+	private final ClassFileVersion version;
+	private final ClassFileInfo info;
+	// TODO : унести в класс
+	private final IConstantPoolRow[] constantPool;
 	private Interface[] interfaces;
 	private Field[] fields;
 	private Method[] methods;
+	private Attribute[] attributes;
 
-	public ClassFile() {
+	public ClassFile(ClassFileVersion version, ClassFileInfo info, IConstantPoolRow[] constantPool) {
+		this.version = version;
+		this.info = info;
+		this.constantPool = constantPool;
 	}
 
-	public int getMinorVersion() {
-		return minorVersion;
+	public ClassFileVersion getVersion() {
+		return version;
 	}
 
-	public void setMinorVersion(int minorVersion) {
-		this.minorVersion = minorVersion;
-	}
-
-	public int getMajorVersion() {
-		return majorVersion;
-	}
-
-	public void setMajorVersion(int majorVersion) {
-		this.majorVersion = majorVersion;
+	public ClassFileInfo getInfo() {
+		return info;
 	}
 
 	public IConstantPoolRow[] getConstantPool() {
 		return constantPool;
-	}
-
-	public void setConstantPool(IConstantPoolRow[] infos) {
-		this.constantPool = infos;
 	}
 
 	public Interface[] getInterfaces() {
@@ -64,6 +57,14 @@ public class ClassFile {
 
 	public void setMethods(Method[] methods) {
 		this.methods = methods;
+	}
+
+	public Attribute[] getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Attribute[] attributes) {
+		this.attributes = attributes;
 	}
 
 }
