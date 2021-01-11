@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public enum Modifier {
+	// @formatter:off
 	PUBLIC("public", 0x0001),
 	PRIVATE("private", 0x0002),
 	PROTECTED("protected", 0x0004),
@@ -17,35 +18,36 @@ public enum Modifier {
 	SYNTHETIC("synthetic", 0x1000),
 	ANNOTATION("annotation", 0x2000),
 	ENUM("enum", 0x4000);
-	
+	// @formatter:on
+
 	private final String name;
 	private final int value;
-		
-	 Modifier(String name, int value) {
-		 this.name = name;
+
+	Modifier(String name, int value) {
+		this.name = name;
 		this.value = value;
 	}
 
 	public String getName() {
 		return name;
 	}
-	 
+
 	public int getValue() {
 		return value;
 	}
-	
+
 	public boolean is(int value) {
 		return (value & this.value) != 0;
 	}
-	
+
 	public static Set<Modifier> fromValue(int value) {
 		EnumSet<Modifier> result = EnumSet.noneOf(Modifier.class);
-		for(Modifier modifier : Modifier.values()) {
-			if(modifier.is(value)) {
+		for (Modifier modifier : Modifier.values()) {
+			if (modifier.is(value)) {
 				result.add(modifier);
 			}
 		}
-		
+
 		return result;
 	}
 
