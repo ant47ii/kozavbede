@@ -7,7 +7,7 @@ import ru.kozavbede.java.reader.MultiInputStreamReader;
 
 public class InterfaceReader extends MultiInputStreamReader<Interface[]> {
 
-	public InterfaceReader(InputStream is) {
+	private InterfaceReader(InputStream is) {
 		super(is);
 	}
 
@@ -19,6 +19,18 @@ public class InterfaceReader extends MultiInputStreamReader<Interface[]> {
 			interfaces[i] = new Interface(classIndex);
 		}
 		return interfaces;
+	}
+
+	public static class Builder {
+
+		private Builder() {
+
+		}
+
+		public static InterfaceReader from(InputStream is) {
+			return new InterfaceReader(is);
+		}
+
 	}
 
 }

@@ -17,19 +17,8 @@ import ru.kozavbede.java.reader.SingleInputStreamReader;
 
 public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 
-	private final ConstantPoolReader infoReader;
-	private final InterfaceReader interfaceReader;
-	private final FieldReader fieldReader;
-	private final MethodReader methodReader;
-	private final AttributeReader attributeReader;
-
-	public ClassFileReader(InputStream is) {
+	private ClassFileReader(InputStream is) {
 		super(is);
-		this.infoReader = new ConstantPoolReader(is);
-		this.interfaceReader = new InterfaceReader(is);
-		this.fieldReader = new FieldReader(is);
-		this.methodReader = new MethodReader(is);
-		this.attributeReader = new AttributeReader(is);
 	}
 
 	@Override
@@ -55,8 +44,9 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 	}
 
 	private ConstantPool readConstantPool() throws IOException {
+		ConstantPoolReader reader = ConstantPoolReader.Builder.from(is);
 		int constantPoolCount = read2Int();
-		return infoReader.read(constantPoolCount);
+		return reader.read(constantPoolCount);
 	}
 
 	private ClassFileInfo readClassInfo() throws IOException {
@@ -67,26 +57,41 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 	}
 
 	private void readInterfaces(ClassFile classFile) throws IOException {
+		InterfaceReader reader = InterfaceReader.Builder.from(is);
 		int interfaceCount = read2Int();
-		Interface[] interfaces = interfaceReader.read(interfaceCount);
+		Interface[] interfaces = reader.read(interfaceCount);
 		classFile.setInterfaces(interfaces);
 	}
 
 	private void readFields(ClassFile classFile) throws IOException {
+		FieldReader reader = FieldReader.Builder.from(is, classFile.getConstantPool());
 		int fieldCount = read2Int();
-		Field[] fields = fieldReader.read(fieldCount);
+		Field[] fields = reader.read(fieldCount);
 		classFile.setFields(fields);
 	}
 
 	private void readMethods(ClassFile classFile) throws IOException {
+		MethodReader reader = MethodReader.Builder.from(is, classFile.getConstantPool());
 		int methodsCount = read2Int();
-		Method[] methods = methodReader.read(methodsCount);
+		Method[] methods = reader.read(methodsCount);
 		classFile.setMethods(methods);
 	}
 
 	private void readAttributes(ClassFile classFile) throws IOException {
+		AttributeReader reader = AttributeReader.Builder.from(is, classFile.getConstantPool());
 		int attributeCount = read2Int();
-		Attribute[] attributes = attributeReader.read(attributeCount);
+		Attribute[] attributes = reader.read(attributeCount);
 		classFile.setAttributes(attributes);
+	}
+
+	public static class Builder {
+
+		private Builder() {
+
+		}
+
+		public static ClassFileReader from(InputStream is) {
+			return new ClassFileReader(is);
+		}
 	}
 }

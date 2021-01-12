@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ru.kozavbede.java.attributes.AttributeReader;
+import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.reader.MultiInputStreamReader;
 
 public class MethodReader extends MultiInputStreamReader<Method[]> {
 
 	private final AttributeReader attributeReader;
 
-	public MethodReader(InputStream is) {
+	private MethodReader(InputStream is, ConstantPool pool) {
 		super(is);
-		this.attributeReader = new AttributeReader(is);
+		this.attributeReader = AttributeReader.Builder.from(is, pool);
 	}
 
 	@Override
@@ -29,5 +30,16 @@ public class MethodReader extends MultiInputStreamReader<Method[]> {
 			methods[i] = method;
 		}
 		return methods;
+	}
+
+	public static class Builder {
+
+		private Builder() {
+
+		}
+
+		public static MethodReader from(InputStream is, ConstantPool pool) {
+			return new MethodReader(is, pool);
+		}
 	}
 }

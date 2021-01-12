@@ -18,7 +18,7 @@ import ru.kozavbede.java.reader.MultiInputStreamReader;
 
 public class ConstantPoolReader extends MultiInputStreamReader<ConstantPool> {
 
-	public ConstantPoolReader(InputStream is) {
+	private ConstantPoolReader(InputStream is) {
 		super(is);
 	}
 
@@ -128,5 +128,16 @@ public class ConstantPoolReader extends MultiInputStreamReader<ConstantPool> {
 		long longValue = read8Long();
 		double value = Double.longBitsToDouble(longValue);
 		return new DoubleInfo(tagIndex, value);
+	}
+
+	public static class Builder {
+
+		private Builder() {
+
+		}
+
+		public static ConstantPoolReader from(InputStream is) {
+			return new ConstantPoolReader(is);
+		}
 	}
 }

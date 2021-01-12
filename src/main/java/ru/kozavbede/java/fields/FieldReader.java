@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ru.kozavbede.java.attributes.AttributeReader;
+import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.reader.MultiInputStreamReader;
 
 public class FieldReader extends MultiInputStreamReader<Field[]> {
 
 	private final AttributeReader attributeReader;
 
-	public FieldReader(InputStream is) {
+	private FieldReader(InputStream is, ConstantPool pool) {
 		super(is);
-		this.attributeReader = new AttributeReader(is);
+		this.attributeReader = AttributeReader.Builder.from(is, pool);
 	}
 
 	@Override
@@ -29,6 +30,18 @@ public class FieldReader extends MultiInputStreamReader<Field[]> {
 			fields[i] = field;
 		}
 		return fields;
+	}
+
+	public static class Builder {
+
+		private Builder() {
+
+		}
+
+		public static FieldReader from(InputStream is, ConstantPool pool) {
+			return new FieldReader(is, pool);
+		}
+
 	}
 
 }

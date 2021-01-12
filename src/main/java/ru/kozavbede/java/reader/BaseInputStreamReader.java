@@ -7,11 +7,10 @@ import java.io.InputStream;
  * 
  * Базовая реализация чтения {@code InputStream}.
  *
- * @param <T> Тип, возвращаемый при чтении потока.
  */
-public abstract class BaseInputStreamReader<T> implements IByteReader {
+public abstract class BaseInputStreamReader implements IByteReader {
 
-	private final InputStream is;
+	protected final InputStream is;
 
 	protected BaseInputStreamReader(InputStream is) {
 		this.is = is;
