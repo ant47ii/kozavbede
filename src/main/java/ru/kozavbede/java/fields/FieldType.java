@@ -1,6 +1,6 @@
-package ru.kozavbede.java;
+package ru.kozavbede.java.fields;
 
-public enum Item {
+public enum FieldType {
 	// @formatter:off
 	BYTE('B', "byte"),
 	CHAR('C', "char"),
@@ -8,25 +8,22 @@ public enum Item {
 	FLOAT('F', "float"),
 	INT('I', "int"),
 	LONG('J', "long"),
+	CLASS_NAME('L', "class"),
 	SHORT('S', "short"),
 	BOOLEAN('Z', "boolean"),
-	STRING('s', "String"),
-	ENUM('e', "Enum type"),
-	CLASS('c', "class"),
-	ANNOTATION('@', "Annotation type"),
 	ARRAY('[', "Array type");
 	// @formatter:on
 
-	private final char tagItem;
+	private final char term;
 	private final String type;
 
-	private Item(char tagItem, String type) {
-		this.tagItem = tagItem;
+	private FieldType(char term, String type) {
+		this.term = term;
 		this.type = type;
 	}
 
-	public char getTagItem() {
-		return tagItem;
+	public char getTerm() {
+		return term;
 	}
 
 	public String getType() {
