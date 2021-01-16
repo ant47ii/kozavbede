@@ -33,6 +33,10 @@ public class ConstantPool implements Iterable<IConstantPoolRow> {
 		return type.cast(pool[index - 1]);
 	}
 
+	public IConstantPoolRow get(int index) {
+		return pool[index - 1];
+	}
+
 	private class Itr implements Iterator<IConstantPoolRow> {
 		int cursor = 0;
 
