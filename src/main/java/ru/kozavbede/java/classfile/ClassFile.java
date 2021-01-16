@@ -1,6 +1,6 @@
 package ru.kozavbede.java.classfile;
 
-import ru.kozavbede.java.attributes.BaseAttribute;
+import ru.kozavbede.java.attributes.IAttribute;
 import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.fields.Field;
 import ru.kozavbede.java.interfaces.Interface;
@@ -19,7 +19,7 @@ public class ClassFile {
 	private Interface[] interfaces;
 	private Field[] fields;
 	private Method[] methods;
-	private BaseAttribute[] attributes;
+	private IAttribute[] attributes;
 
 	public ClassFile(ClassFileVersion version, ClassFileInfo info, ConstantPool constantPool) {
 		this.version = version;
@@ -63,11 +63,11 @@ public class ClassFile {
 		this.methods = methods;
 	}
 
-	public BaseAttribute[] getAttributes() {
+	public IAttribute[] getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(BaseAttribute[] attributes) {
+	public void setAttributes(IAttribute[] attributes) {
 		this.attributes = attributes;
 	}
 

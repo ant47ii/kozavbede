@@ -8,7 +8,7 @@ import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
 import ru.kozavbede.java.reader.MultiInputStreamReader;
 
-public class AttributeReader extends MultiInputStreamReader<BaseAttribute[]> {
+public class AttributeReader extends MultiInputStreamReader<IAttribute[]> {
 
 	private final ConstantPool pool;
 
@@ -18,15 +18,15 @@ public class AttributeReader extends MultiInputStreamReader<BaseAttribute[]> {
 	}
 
 	@Override
-	public BaseAttribute[] read(int attributeCount) throws IOException {
-		BaseAttribute[] attributes = new BaseAttribute[attributeCount];
+	public IAttribute[] read(int attributeCount) throws IOException {
+		IAttribute[] attributes = new IAttribute[attributeCount];
 		for (int i = 0; i < attributeCount; i++) {
 			int attributeNameIndex = read2Int();
 			int attributeLength = read4Int();
 
 			Utf8Info name = pool.get(attributeNameIndex, Utf8Info.class);
 			AttributeType type = AttributeType.fromName(name.getValue());
-			BaseAttribute attribute = new BaseAttribute(attributeNameIndex, type);
+			IAttribute attribute = new BaseAttribute(attributeNameIndex, type);
 
 			if (type != null) {
 				switch (type) {
@@ -47,7 +47,7 @@ public class AttributeReader extends MultiInputStreamReader<BaseAttribute[]> {
 		return attributes;
 	}
 
-	private ConstantAttribute readConstantValue(BaseAttribute attribute) throws IOException {
+	private ConstantAttribute readConstantValue(IAttribute attribute) throws IOException {
 		int attributeNameIndex = read2Int();
 		return new ConstantAttribute(attribute, attributeNameIndex);
 	}

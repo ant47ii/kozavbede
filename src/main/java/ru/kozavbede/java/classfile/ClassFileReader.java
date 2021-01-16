@@ -3,8 +3,8 @@ package ru.kozavbede.java.classfile;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ru.kozavbede.java.attributes.BaseAttribute;
 import ru.kozavbede.java.attributes.AttributeReader;
+import ru.kozavbede.java.attributes.IAttribute;
 import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.constpool.ConstantPoolReader;
 import ru.kozavbede.java.fields.Field;
@@ -80,7 +80,7 @@ public class ClassFileReader extends SingleInputStreamReader<ClassFile> {
 	private void readAttributes(ClassFile classFile) throws IOException {
 		AttributeReader reader = AttributeReader.Builder.from(is, classFile.getConstantPool());
 		int attributeCount = read2Int();
-		BaseAttribute[] attributes = reader.read(attributeCount);
+		IAttribute[] attributes = reader.read(attributeCount);
 		classFile.setAttributes(attributes);
 	}
 

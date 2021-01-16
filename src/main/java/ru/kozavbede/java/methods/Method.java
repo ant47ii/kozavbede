@@ -1,13 +1,13 @@
 package ru.kozavbede.java.methods;
 
-import ru.kozavbede.java.attributes.BaseAttribute;
+import ru.kozavbede.java.attributes.IAttribute;
 
 public class Method {
 
 	private final int accessFlags;
 	private final int nameIndex;
 	private final int descriptorIndex;
-	private BaseAttribute[] attribures;
+	private IAttribute[] attribures;
 
 	public Method(int accessFlags, int nameIndex, int descriptorIndex) {
 		this.accessFlags = accessFlags;
@@ -27,11 +27,11 @@ public class Method {
 		return descriptorIndex;
 	}
 
-	public BaseAttribute[] getAttribures() {
+	public IAttribute[] getAttribures() {
 		return attribures;
 	}
 
-	public void setAttribures(BaseAttribute[] attribures) {
+	public void setAttribures(IAttribute[] attribures) {
 		this.attribures = attribures;
 	}
 
