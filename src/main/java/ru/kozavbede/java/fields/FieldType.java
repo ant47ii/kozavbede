@@ -11,7 +11,8 @@ public enum FieldType {
 	CLASS_NAME('L', "class"),
 	SHORT('S', "short"),
 	BOOLEAN('Z', "boolean"),
-	ARRAY('[', "Array type");
+	ARRAY('[', "Array type"),
+	VOID('V', "void");
 	// @formatter:on
 
 	private final char term;
@@ -28,5 +29,15 @@ public enum FieldType {
 
 	public String getType() {
 		return type;
+	}
+
+	public static FieldType fromTerm(char term) {
+		for (FieldType type : values()) {
+			if (type.getTerm() == term) {
+				return type;
+			}
+		}
+
+		return null;
 	}
 }
