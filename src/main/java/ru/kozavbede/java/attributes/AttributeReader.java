@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ru.kozavbede.java.attributes.impl.ConstantAttribute;
+import ru.kozavbede.java.attributes.impl.SignatureAttribute;
 import ru.kozavbede.java.constpool.ConstantPool;
 import ru.kozavbede.java.constpool.impl.Utf8Info;
 import ru.kozavbede.java.reader.MultiInputStreamReader;
@@ -33,6 +34,9 @@ public class AttributeReader extends MultiInputStreamReader<IAttribute[]> {
 				case CONSTANT_VALUE:
 					attribute = readConstantValue(attribute);
 					break;
+				case SIGNATURE:
+					attribute = readSignature(attribute);
+					break;
 
 				default:
 					// Для неподдерживаемых атрибутов фиктивно прочитаем тело.
@@ -50,6 +54,11 @@ public class AttributeReader extends MultiInputStreamReader<IAttribute[]> {
 	private ConstantAttribute readConstantValue(IAttribute attribute) throws IOException {
 		int attributeNameIndex = read2Int();
 		return new ConstantAttribute(attribute, attributeNameIndex);
+	}
+
+	private SignatureAttribute readSignature(IAttribute attribute) throws IOException {
+		int signatureIndex = read2Int();
+		return new SignatureAttribute(attribute, signatureIndex);
 	}
 
 	public static class Builder {
