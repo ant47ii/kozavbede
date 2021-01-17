@@ -3,6 +3,7 @@ package ru.kozavbede.java.attributes;
 public enum AttributeType {
 	// @formatter:off
 	CONSTANT_VALUE("ConstantValue"),
+	SIGNATURE("Signature"),
 	CODE("Code"),
 	SOURCE_FILE("SourceFile");
 	// @formatter:on
