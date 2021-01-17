@@ -7,10 +7,10 @@ import ru.kozavbede.java.fields.FieldType;
 
 public class MethodDescriptor {
 
-	private final FieldTypeRow[] parameterTypes;
-	private final FieldTypeRow returnType;
+	private final IFieldTypeRow[] parameterTypes;
+	private final IFieldTypeRow returnType;
 
-	private MethodDescriptor(FieldTypeRow[] parameterTypes, FieldTypeRow returnType) {
+	private MethodDescriptor(IFieldTypeRow[] parameterTypes, IFieldTypeRow returnType) {
 		this.parameterTypes = parameterTypes;
 		this.returnType = returnType;
 	}
@@ -20,31 +20,46 @@ public class MethodDescriptor {
 		return parser.parse();
 	}
 
-	public FieldTypeRow[] getParameterTypes() {
+	public IFieldTypeRow[] getParameterTypes() {
 		return parameterTypes;
 	}
 
-	public FieldTypeRow getReturnType() {
+	public IFieldTypeRow getReturnType() {
 		return returnType;
 	}
 
-	public static class FieldTypeRow {
-		private boolean isArray;
+	public static interface IFieldTypeRow {
+		public FieldType getType();
+
+		public FieldType getTarget();
+	}
+
+	public static class FieldTypeRow implements IFieldTypeRow {
 		private FieldType type;
-		private String className;
+		private FieldType target;
 
-		public FieldTypeRow(FieldType type, boolean isArray, String className) {
+		public FieldTypeRow(FieldType type, FieldType target) {
 			this.type = type;
-			this.isArray = isArray;
-			this.className = className;
+			this.target = target;
 		}
 
-		public boolean isArray() {
-			return isArray;
-		}
-
+		@Override
 		public FieldType getType() {
 			return type;
+		}
+
+		@Override
+		public FieldType getTarget() {
+			return target;
+		}
+	}
+
+	public static class FieldClassTypeRow extends FieldTypeRow {
+		private String className;
+
+		public FieldClassTypeRow(FieldType type, FieldType target, String className) {
+			super(type, target);
+			this.className = className;
 		}
 
 		public String getClassName() {
@@ -68,43 +83,43 @@ public class MethodDescriptor {
 			return new MethodDescriptor(parseParameters(), parseReturn());
 		}
 
-		private FieldTypeRow[] parseParameters() {
+		private IFieldTypeRow[] parseParameters() {
 			if (parameterDescriptor.isEmpty()) {
-				return new FieldTypeRow[0];
+				return new IFieldTypeRow[0];
 			}
 
 			index = -1;
-			List<FieldTypeRow> types = new ArrayList<>();
+			List<IFieldTypeRow> types = new ArrayList<>();
 			while (index < parameterDescriptor.length() - 1) {
-				FieldTypeRow type = parse(parameterDescriptor);
+				IFieldTypeRow type = parse(parameterDescriptor);
 				types.add(type);
 			}
 
-			return types.toArray(new FieldTypeRow[0]);
+			return types.toArray(new IFieldTypeRow[0]);
 		}
 
-		private FieldTypeRow parseReturn() {
+		private IFieldTypeRow parseReturn() {
 			index = -1;
 			return parse(returnDescriptor);
 		}
 
-		private FieldTypeRow parse(String s) {
-			boolean isArray = false;
+		private IFieldTypeRow parse(String s) {
 			FieldType type = read(s);
+			FieldType target = null;
+
+			if (type == FieldType.CLASS_NAME) {
+				return new FieldClassTypeRow(type, null, readClass(s));
+			}
 
 			if (type == FieldType.ARRAY) {
-				isArray = true;
-				type = read(s);
+				target = read(s);
 			}
 
-			String className = null;
-			if (type == FieldType.CLASS_NAME) {
-				className = readClass(s);
-			} else if (isArray) {
-				type = read(s);
+			if (target == FieldType.CLASS_NAME) {
+				return new FieldClassTypeRow(type, target, readClass(s));
+			} else {
+				return new FieldTypeRow(type, target);
 			}
-
-			return new FieldTypeRow(type, isArray, className);
 		}
 
 		private FieldType read(String descriptor) {
