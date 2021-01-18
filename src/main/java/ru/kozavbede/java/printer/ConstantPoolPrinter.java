@@ -1,8 +1,5 @@
 package ru.kozavbede.java.printer;
 
-import static ru.kozavbede.java.printer.Helper.getClassInfoInfo;
-import static ru.kozavbede.java.printer.Helper.getNameAndTypeInfo;
-import static ru.kozavbede.java.printer.Helper.getUtf8Info;
 import static ru.kozavbede.java.printer.Helper.println;
 
 import ru.kozavbede.java.constpool.ConstantPool;
@@ -38,23 +35,23 @@ public class ConstantPoolPrinter {
 		switch (info.getTag()) {
 		case STRING:
 			StringInfo stringInfo = (StringInfo) info;
-			Utf8Info stringInfoName = getUtf8Info(constPool, stringInfo.getNameIndex());
+			Utf8Info stringInfoName = constPool.get(stringInfo.getNameIndex(), Utf8Info.class);
 			return stringInfoName.getValue();
 		case NAME_AND_TYPE:
 			NameAndTypeInfo nameAndTypeInfo = (NameAndTypeInfo) info;
-			Utf8Info typeName = getUtf8Info(constPool, nameAndTypeInfo.getNameIndex());
-			Utf8Info descName = getUtf8Info(constPool, nameAndTypeInfo.getDescriptorIndex());
+			Utf8Info typeName = constPool.get(nameAndTypeInfo.getNameIndex(), Utf8Info.class);
+			Utf8Info descName = constPool.get(nameAndTypeInfo.getDescriptorIndex(), Utf8Info.class);
 			return typeName.getValue() + ":" + descName.getValue();
 		case CLASS:
 			ClassInfo classInfo = (ClassInfo) info;
-			Utf8Info className = getUtf8Info(constPool, classInfo.getNameIndex());
+			Utf8Info className = constPool.get(classInfo.getNameIndex(), Utf8Info.class);
 			return className.getValue();
 		case FIELD_REF:
 		case INTERFACE_METHOD_REF:
 		case METHOD_REF:
 			BaseRefInfo refInfo = (BaseRefInfo) info;
-			ClassInfo clsInfo = getClassInfoInfo(constPool, refInfo.getClassIndex());
-			NameAndTypeInfo typeInfo = getNameAndTypeInfo(constPool, refInfo.getNameAndTypeIndex());
+			ClassInfo clsInfo = constPool.get(refInfo.getClassIndex(), ClassInfo.class);
+			NameAndTypeInfo typeInfo = constPool.get(refInfo.getNameAndTypeIndex(), NameAndTypeInfo.class);
 			return getDisplayValue(constPool, clsInfo) + "." + getDisplayValue(constPool, typeInfo);
 		default:
 			return "";
