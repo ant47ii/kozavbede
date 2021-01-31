@@ -1,9 +1,5 @@
 package ru.kozavbede.java.printer;
 
-import ru.kozavbede.java.constpool.ConstantPool;
-import ru.kozavbede.java.constpool.impl.ClassInfo;
-import ru.kozavbede.java.constpool.impl.Utf8Info;
-
 public class Helper {
 
 	private Helper() {
@@ -24,14 +20,6 @@ public class Helper {
 		} else {
 			System.out.print(s);
 		}
-	}
-
-	public static Utf8Info getUtf8Info(ConstantPool constPool, int index) {
-		return constPool.get(index, Utf8Info.class);
-	}
-
-	public static ClassInfo getClassInfoInfo(ConstantPool constPool, int index) {
-		return constPool.get(index, ClassInfo.class);
 	}
 
 }

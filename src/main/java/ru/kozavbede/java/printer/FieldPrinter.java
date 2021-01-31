@@ -33,13 +33,11 @@ public class FieldPrinter {
 		String name = getName(constPool, field);
 
 		String constVal = getConstantValue(constPool, field);
-		if (constVal != null) {
+		if (constVal.length() > 0) {
 			constVal = " = " + constVal;
-		} else {
-			constVal = "";
 		}
 
-		println("  %s %s %s%s;", modifiers, type, name, constVal);
+		println("  %s %s %s%s", modifiers, type, name, constVal);
 	}
 
 	private static String getType(ConstantPool constPool, Field field) {
@@ -55,7 +53,9 @@ public class FieldPrinter {
 
 	private static String getModifiers(Field field) {
 		int flags = field.getAccessFlags();
-		return Modifier.fromValue(flags).stream().map(Modifier::getName).collect(Collectors.joining(" "));
+		return Modifier.fromValue(flags).stream()
+				.map(Modifier::getName)
+				.collect(Collectors.joining(" "));
 	}
 
 	private static String getName(ConstantPool constPool, Field field) {
@@ -72,7 +72,7 @@ public class FieldPrinter {
 		}
 
 		if (con == null) {
-			return null;
+			return "";
 		}
 
 		if (con instanceof StringInfo) {
