@@ -1,6 +1,5 @@
 package ru.kozavbede.java.printer;
 
-import static ru.kozavbede.java.printer.Helper.getUtf8Info;
 import static ru.kozavbede.java.printer.Helper.println;
 
 import java.util.stream.Collectors;
@@ -44,13 +43,9 @@ public class FieldPrinter {
 	}
 
 	private static String getType(ConstantPool constPool, Field field) {
-		int descIndex = field.getDescriptorIndex();
-		Utf8Info utf8 = getUtf8Info(constPool, descIndex);
-		String typeName = utf8.getValue();
+		String typeName = constPool.get(field.getDescriptorIndex(), Utf8Info.class).getValue();
 
-		char term = typeName.charAt(0);
-		FieldType type = FieldType.fromTerm(term);
-
+		FieldType type = FieldType.fromTerm(typeName.charAt(0));
 		if (type == FieldType.CLASS_NAME) {
 			return typeName.substring(1, typeName.length() - 1);
 		} else {
@@ -64,9 +59,7 @@ public class FieldPrinter {
 	}
 
 	private static String getName(ConstantPool constPool, Field field) {
-		int nidx = field.getNameIndex();
-		Utf8Info name = getUtf8Info(constPool, nidx);
-		return name.getValue();
+		return constPool.get(field.getNameIndex(), Utf8Info.class).getValue();
 	}
 
 	private static String getConstantValue(ConstantPool constPool, Field field) {
@@ -84,10 +77,10 @@ public class FieldPrinter {
 
 		if (con instanceof StringInfo) {
 			StringInfo str = (StringInfo) con;
-			String value = getUtf8Info(constPool, str.getNameIndex()).getValue();
+			String value = constPool.get(str.getNameIndex(), Utf8Info.class).getValue();
 			return "\"" + value + "\"";
 		} else {
-			return con.toString();
+			return con.toString(); // TODO это плохо операться на toString, нужен метод получения значения.
 		}
 	}
 }
