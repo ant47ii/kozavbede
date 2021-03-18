@@ -74,9 +74,8 @@ public class ClassFilePrinter {
 	private static String getType(int flags) {
 		if (Modifier.INTERFACE.is(flags)) {
 			return "interface";
-		} else {
-			return "class";
 		}
+		return "class";
 	}
 
 	private static String getImplements(ConstantPool constPool, ClassFile classFile) {

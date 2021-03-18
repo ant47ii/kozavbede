@@ -8,6 +8,7 @@ public abstract class BaseConstantPoolRow implements IConstantPoolRow {
 		this.index = index;
 	}
 
+	@Override
 	public int getIndex() {
 		return index;
 	}

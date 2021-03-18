@@ -3,7 +3,7 @@ package ru.kozavbede.javap.constpool;
 import java.util.Iterator;
 
 /**
- * 
+ *
  * Пул констант.
  *
  */
@@ -17,7 +17,7 @@ public class ConstantPool implements Iterable<IConstantPoolRow> {
 
 	/**
 	 * Получить значения пула констант.
-	 * 
+	 *
 	 * @return Массив записей пула констант.
 	 */
 	public IConstantPoolRow[] getPool() {

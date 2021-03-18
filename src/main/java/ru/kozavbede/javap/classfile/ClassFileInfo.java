@@ -3,7 +3,7 @@ package ru.kozavbede.javap.classfile;
 import ru.kozavbede.javap.constpool.impl.ClassInfo;
 
 /**
- * 
+ *
  * Информация о файле класса.
  *
  */
@@ -15,7 +15,7 @@ public class ClassFileInfo {
 
 	/**
 	 * Создание информации о файле класса.
-	 * 
+	 *
 	 * @param accessFlags Права доступа.
 	 * @param thisClass   Принадлежность к классу/интерфейсу.
 	 * @param superClass  Суперкласс класса/интерфейса.
@@ -28,7 +28,7 @@ public class ClassFileInfo {
 
 	/**
 	 * Получить права доступа.
-	 * 
+	 *
 	 * @return Маска флагов прав доступа.
 	 */
 	public int getAccessFlags() {
@@ -37,7 +37,7 @@ public class ClassFileInfo {
 
 	/**
 	 * Получить принадлежность к классу/интерфейсу.
-	 * 
+	 *
 	 * @return Принадлежность классу/интерфейсу.
 	 * @see ClassInfo
 	 */
@@ -47,7 +47,7 @@ public class ClassFileInfo {
 
 	/**
 	 * Получить суперкласс класса/интерфейса.
-	 * 
+	 *
 	 * @return Суперкласс класса/интерфейса.
 	 * @see ClassInfo
 	 */

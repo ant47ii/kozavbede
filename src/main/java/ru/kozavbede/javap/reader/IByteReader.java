@@ -3,7 +3,7 @@ package ru.kozavbede.javap.reader;
 import java.io.IOException;
 
 /**
- * 
+ *
  * Поддержка чтения потока байт.
  *
  */
@@ -11,7 +11,7 @@ public interface IByteReader {
 
 	/**
 	 * Прочитать 8 байта как число.
-	 * 
+	 *
 	 * @return
 	 * @throws IOException
 	 */
@@ -19,7 +19,7 @@ public interface IByteReader {
 
 	/**
 	 * Прочитать 4 байта как число.
-	 * 
+	 *
 	 * @return
 	 * @throws IOException
 	 */
@@ -27,7 +27,7 @@ public interface IByteReader {
 
 	/**
 	 * Прочитать 2 байта как число.
-	 * 
+	 *
 	 * @return
 	 * @throws IOException
 	 */
@@ -35,7 +35,7 @@ public interface IByteReader {
 
 	/**
 	 * Прочитать 1 байт как число.
-	 * 
+	 *
 	 * @return
 	 * @throws IOException
 	 */
@@ -43,7 +43,7 @@ public interface IByteReader {
 
 	/**
 	 * Прочитать n байт.
-	 * 
+	 *
 	 * @param len Количество считываемых байтов.
 	 * @return
 	 * @throws IOException

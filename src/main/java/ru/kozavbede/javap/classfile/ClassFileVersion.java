@@ -1,7 +1,7 @@
 package ru.kozavbede.javap.classfile;
 
 /**
- * 
+ *
  * Информация о версии файла класса.
  *
  */
@@ -12,7 +12,7 @@ public class ClassFileVersion {
 
 	/**
 	 * Создание новой информации о версии файла класса.
-	 * 
+	 *
 	 * @param minorVersion Второстепенная версия файла класса.
 	 * @param majorVersion Основная версия файла класса.
 	 */
@@ -23,7 +23,7 @@ public class ClassFileVersion {
 
 	/**
 	 * Получить второстепенную версию файла класса.
-	 * 
+	 *
 	 * @return Второстепенная версия файла класса.
 	 */
 	public int getMinorVersion() {
@@ -32,7 +32,7 @@ public class ClassFileVersion {
 
 	/**
 	 * Получить основную версию файла класса.
-	 * 
+	 *
 	 * @return Основная версия файла класса.
 	 */
 	public int getMajorVersion() {

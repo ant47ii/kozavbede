@@ -117,9 +117,8 @@ public class MethodDescriptor {
 
 			if (target == FieldType.CLASS_NAME) {
 				return new FieldClassTypeRow(type, target, readClass(s));
-			} else {
-				return new FieldTypeRow(type, target);
 			}
+			return new FieldTypeRow(type, target);
 		}
 
 		private FieldType read(String descriptor) {

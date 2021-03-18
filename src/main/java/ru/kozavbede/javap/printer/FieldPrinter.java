@@ -46,9 +46,8 @@ public class FieldPrinter {
 		FieldType type = FieldType.fromTerm(typeName.charAt(0));
 		if (type == FieldType.CLASS_NAME) {
 			return typeName.substring(1, typeName.length() - 1);
-		} else {
-			return type.getType();
 		}
+		return type.getType();
 	}
 
 	private static String getModifiers(Field field) {
@@ -79,8 +78,7 @@ public class FieldPrinter {
 			StringInfo str = (StringInfo) con;
 			String value = constPool.get(str.getNameIndex(), Utf8Info.class).getValue();
 			return "\"" + value + "\"";
-		} else {
-			return con.toString(); // TODO это плохо операться на toString, нужен метод получения значения.
 		}
+		return con.toString(); // TODO это плохо операться на toString, нужен метод получения значения.
 	}
 }

@@ -1,7 +1,7 @@
 package ru.kozavbede.javap.constpool;
 
 /**
- * 
+ *
  * Запись пула констант.
  *
  */

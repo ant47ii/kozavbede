@@ -7,7 +7,7 @@ import ru.kozavbede.javap.interfaces.Interface;
 import ru.kozavbede.javap.methods.Method;
 
 /**
- * 
+ *
  * Файл класса.
  *
  */
